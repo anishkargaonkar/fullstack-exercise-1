@@ -21,7 +21,7 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="fixed left-0 top-16 bottom-0 w-[280px] bg-white border-r border-gray-200 flex flex-col">
+    <aside className="fixed left-0 top-16 bottom-0 w-[280px] bg-white border-r border-gray-200 flex flex-col z-10">
       {/* Workspace Selector */}
       <div className="p-4 border-b border-gray-200">
         <button className="w-full flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">

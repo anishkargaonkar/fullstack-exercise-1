@@ -5,21 +5,18 @@ import { KanbanBoard } from "@/components/kanban/KanbanBoard";
 
 export default function Home() {
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      {/* Header at top */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Fixed Header */}
       <Header />
 
-      {/* Main content area with Sidebar and content */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - fixed left */}
-        <Sidebar />
+      {/* Fixed Sidebar */}
+      <Sidebar />
 
-        {/* Main content area - offset by sidebar width */}
-        <main className="flex-1 ml-[280px] overflow-auto">
-          <ProjectHeader />
-          <KanbanBoard />
-        </main>
-      </div>
+      {/* Main content area - offset for fixed header (pt-16) and sidebar (ml-[280px]) */}
+      <main className="pt-16 ml-[280px] h-screen flex flex-col overflow-hidden">
+        <ProjectHeader />
+        <KanbanBoard />
+      </main>
     </div>
   );
 }
