@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import type { Task, TaskStatus, TaskUpdate } from '../../lib/types';
 import { TaskCard } from './TaskCard';

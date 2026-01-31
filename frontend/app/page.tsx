@@ -1,7 +1,7 @@
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import ProjectHeader from "@/components/ProjectHeader";
-import KanbanBoard from "@/components/kanban/KanbanBoard";
+import { Header } from "@/components/Header";
+import { Sidebar } from "@/components/Sidebar";
+import { ProjectHeader } from "@/components/ProjectHeader";
+import { KanbanBoard } from "@/components/kanban/KanbanBoard";
 
 export default function Home() {
   return (

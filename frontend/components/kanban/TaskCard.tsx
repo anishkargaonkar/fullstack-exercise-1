@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import type { Task, TaskStatus, TaskUpdate } from '../../lib/types';
 import { Avatar } from '../ui/Avatar';
