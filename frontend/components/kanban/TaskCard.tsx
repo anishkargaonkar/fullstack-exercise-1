@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import type { Task, TaskStatus, TaskUpdate } from '../../lib/types';
 import { Avatar } from '../ui/Avatar';
 
@@ -13,6 +14,8 @@ interface TaskCardProps {
 export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [statusMenuOpen, setStatusMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return null;
@@ -57,7 +60,17 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
 
         <div className="relative">
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
+            ref={buttonRef}
+            onClick={() => {
+              if (!menuOpen && buttonRef.current) {
+                const rect = buttonRef.current.getBoundingClientRect();
+                setMenuPosition({
+                  top: rect.bottom + 4,
+                  left: rect.right - 192,
+                });
+              }
+              setMenuOpen(!menuOpen);
+            }}
             className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded transition-colors"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -65,17 +78,20 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
             </svg>
           </button>
 
-          {menuOpen && (
+          {menuOpen && createPortal(
             <>
               <div
-                className="fixed inset-0 z-10"
+                className="fixed inset-0 z-[100]"
                 onClick={() => {
                   setMenuOpen(false);
                   setStatusMenuOpen(false);
                 }}
               />
 
-              <div className="absolute right-0 top-8 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
+              <div
+                className="fixed w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-[101]"
+                style={{ top: menuPosition.top, left: menuPosition.left }}
+              >
                 <div className="relative">
                   <button
                     onClick={() => setStatusMenuOpen(!statusMenuOpen)}
@@ -111,7 +127,8 @@ export function TaskCard({ task, onUpdate, onDelete }: TaskCardProps) {
                   Delete
                 </button>
               </div>
-            </>
+            </>,
+            document.body
           )}
         </div>
       </div>
